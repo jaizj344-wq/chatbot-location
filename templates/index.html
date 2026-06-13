@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot Location</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f5f5;
+            text-align: center;
+        }
+
+        .box {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        #response {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Assistant Location 🚗</h2>
+
+    <p>Posez votre question :</p>
+
+    <input type="text" id="message" placeholder="Ex: Quelle est la caution ?">
+    <br>
+    <button onclick="sendMessage()">Envoyer</button>
+
+    <p id="response"></p>
+</div>
+
+<script>
+async function sendMessage() {
+    let message = document.getElementById("message").value;
+
+    let response = await fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: message })
+    });
+
+    let data = await response.json();
+
+    document.getElementById("response").innerText = data.reply;
+}
+</script>
+
+</body>
+</html>
