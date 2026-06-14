@@ -28,5 +28,10 @@
     "question": "Quel âge faut-il avoir pour louer ?",
     "mots_cles": ["age", "âge", "jeune", "minimum"],
     "reponse": "L'âge minimum requis est de 18 ans avec un permis valide."
+  },
+   {
+    "question": "Quel est le prix du plein ?",
+    "mots_cles": ["prix", "tarif", "cout", "coût", "payer", "total"],
+    "reponse": "Le prix du plein varie selon nos modèles."
   }
 ]
