@@ -7,6 +7,8 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+MOT_DE_PASSE = "LV-2026"
+
 with open("faq.json", "r", encoding="utf-8") as f:
     faq = json.load(f)
 
@@ -19,13 +21,17 @@ def normaliser(texte):
 def contient_mot_entier(message, mot_cle):
     message = normaliser(message)
     mot_cle = normaliser(mot_cle)
-
     pattern = r"(^|[^a-zA-Z0-9])" + re.escape(mot_cle) + r"([^a-zA-Z0-9]|$)"
     return re.search(pattern, message) is not None
 
 @app.route("/")
 def home():
     return render_template("index.html")
+
+@app.route("/verifier-mdp", methods=["POST"])
+def verifier_mdp():
+    mdp = request.json["password"]
+    return jsonify({"success": mdp == MOT_DE_PASSE})
 
 @app.route("/chat", methods=["POST"])
 def chat():

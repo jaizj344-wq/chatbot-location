@@ -126,6 +126,23 @@
             background: white;
         }
 
+        .password-box {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .password-box input {
+            width: 85%;
+            margin-top: 15px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 12px;
+            font-weight: bold;
+            display: none;
+        }
+
         @media (max-width: 500px) {
             .chat-container {
                 width: 95%;
@@ -148,14 +165,20 @@
     </div>
 
     <div class="chat-box" id="chatBox">
-        <div class="message bot">
-            Bienvenue.<br><br>
-            Je suis Kevin, votre assistant virtuel.<br>
-            Je suis à votre disposition pour répondre à toutes vos questions concernant la location du véhicule.
+        <div id="passwordSection" class="password-box">
+            <div class="message bot">
+                Bienvenue.<br><br>
+                Veuillez entrer le mot de passe pour accéder au chatbot.
+            </div>
+
+            <input type="password" id="passwordInput" placeholder="Mot de passe">
+            <button onclick="checkPassword()">➤</button>
+
+            <div id="errorMessage" class="error">❌ Mot de passe incorrect</div>
         </div>
     </div>
 
-    <div class="input-area">
+    <div class="input-area" id="inputArea" style="display: none;">
         <input type="text" id="message" placeholder="Écrivez votre message...">
         <button onclick="sendMessage()">➤</button>
     </div>
@@ -166,16 +189,51 @@
 </div>
 
 <script>
-const input = document.getElementById("message");
 const chatBox = document.getElementById("chatBox");
+const inputArea = document.getElementById("inputArea");
 
-input.addEventListener("keydown", function(event) {
+async function checkPassword() {
+    let password = document.getElementById("passwordInput").value.trim();
+    let errorMessage = document.getElementById("errorMessage");
+
+    let response = await fetch("/verifier-mdp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: password })
+    });
+
+    let data = await response.json();
+
+    if (data.success) {
+        chatBox.innerHTML = `
+            <div class="message bot">
+                Bienvenue.<br><br>
+                Je suis Kevin, votre assistant virtuel.<br>
+                Je suis à votre disposition pour répondre à toutes vos questions concernant la location du véhicule.
+            </div>
+        `;
+        inputArea.style.display = "flex";
+        document.getElementById("message").focus();
+    } else {
+        errorMessage.style.display = "block";
+    }
+}
+
+document.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
-        sendMessage();
+        const passwordInput = document.getElementById("passwordInput");
+        const messageInput = document.getElementById("message");
+
+        if (passwordInput && document.activeElement === passwordInput) {
+            checkPassword();
+        } else if (messageInput && document.activeElement === messageInput) {
+            sendMessage();
+        }
     }
 });
 
 async function sendMessage() {
+    let input = document.getElementById("message");
     let message = input.value.trim();
 
     if (message === "") return;
