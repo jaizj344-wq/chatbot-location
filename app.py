@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import json
 import os
-import difflib
+import re
+import unicodedata
 from datetime import datetime
 
 app = Flask(__name__)
@@ -9,44 +10,40 @@ app = Flask(__name__)
 with open("faq.json", "r", encoding="utf-8") as f:
     faq = json.load(f)
 
+def normaliser(texte):
+    texte = texte.lower()
+    texte = unicodedata.normalize("NFD", texte)
+    texte = "".join(c for c in texte if unicodedata.category(c) != "Mn")
+    return texte
+
+def contient_mot_entier(message, mot_cle):
+    message = normaliser(message)
+    mot_cle = normaliser(mot_cle)
+
+    pattern = r"(^|[^a-zA-Z0-9])" + re.escape(mot_cle) + r"([^a-zA-Z0-9]|$)"
+    return re.search(pattern, message) is not None
+
 @app.route("/")
 def home():
     return render_template("index.html")
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    message = request.json["message"].lower().strip()
-
-    meilleure_reponse = None
-    meilleur_score = 0
+    message = request.json["message"]
 
     for item in faq:
-        question_type = item["question"].lower()
-        mots_cles = item["mots_cles"]
-        reponse = item["reponse"]
-
-        score = difflib.SequenceMatcher(None, message, question_type).ratio()
-
-        for mot in mots_cles:
-            if mot.lower() in message:
-                score += 0.35
-
-        if score > meilleur_score:
-            meilleur_score = score
-            meilleure_reponse = reponse
-
-    if meilleur_score >= 0.35:
-        return jsonify({"reply": meilleure_reponse})
+        for mot in item["mots_cles"]:
+            if contient_mot_entier(message, mot):
+                return jsonify({"reply": item["reponse"]})
 
     enregistrer_question_inconnue(message)
 
     return jsonify({
-        "reply": "Je n'ai pas encore cette information. Vous pouvez contacter le loueur directement."
+        "reply": "Je n'ai pas compris votre question. Pouvez-vous reformuler ou contacter le loueur directement ?"
     })
 
 def enregistrer_question_inconnue(question):
     fichier = "questions_inconnues.json"
-
     data = []
 
     if os.path.exists(fichier):

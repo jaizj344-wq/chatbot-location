@@ -36,7 +36,7 @@
   },
   {
     "question": "Comment fonctionne le carburant ?",
-    "mots_cles": ["carburant", "essence", "plein"],
+    "mots_cles": ["carburant", "essence", "plein", "diesel", "gazole", "sp95", "sp98", "e10", "roule"]
     "reponse": "Le véhicule doit être restitué avec le même niveau de carburant qu'au départ."
   },
   {
