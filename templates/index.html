@@ -2,23 +2,23 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Chatbot Location</title>
+    <title>Kevin - Assistant Location</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f2f4f7;
+            background: #eef2f7;
             margin: 0;
             padding: 0;
         }
 
         .chat-container {
-            width: 420px;
-            height: 600px;
-            margin: 40px auto;
+            width: 430px;
+            height: 620px;
+            margin: 35px auto;
             background: white;
-            border-radius: 18px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+            border-radius: 22px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -28,55 +28,88 @@
             background: #111827;
             color: white;
             padding: 18px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            background: #2563eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
+            font-size: 18px;
+        }
+
+        .header-text {
+            text-align: left;
+        }
+
+        .header-text .name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .header-text .status {
+            font-size: 12px;
+            color: #d1d5db;
         }
 
         .chat-box {
             flex: 1;
-            padding: 15px;
+            padding: 16px;
             overflow-y: auto;
             background: #f9fafb;
         }
 
         .message {
-            max-width: 75%;
-            padding: 10px 14px;
-            margin: 8px 0;
-            border-radius: 16px;
+            max-width: 78%;
+            padding: 11px 15px;
+            margin: 9px 0;
+            border-radius: 18px;
             line-height: 1.4;
             font-size: 14px;
             clear: both;
+            word-wrap: break-word;
         }
 
         .user {
             background: #2563eb;
             color: white;
             margin-left: auto;
-            border-bottom-right-radius: 4px;
+            border-bottom-right-radius: 5px;
         }
 
         .bot {
             background: #e5e7eb;
             color: #111827;
             margin-right: auto;
-            border-bottom-left-radius: 4px;
+            border-bottom-left-radius: 5px;
         }
 
         .input-area {
             display: flex;
-            padding: 12px;
-            border-top: 1px solid #ddd;
+            align-items: center;
+            padding: 13px;
+            border-top: 1px solid #e5e7eb;
             background: white;
         }
 
         input {
             flex: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 20px;
+            padding: 13px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 25px;
             outline: none;
             font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #2563eb;
         }
 
         button {
@@ -85,12 +118,29 @@
             border: none;
             background: #2563eb;
             color: white;
-            border-radius: 20px;
+            border-radius: 50%;
             cursor: pointer;
+            font-size: 16px;
         }
 
         button:hover {
             background: #1d4ed8;
+        }
+
+        .footer-note {
+            font-size: 11px;
+            text-align: center;
+            color: #6b7280;
+            padding-bottom: 8px;
+            background: white;
+        }
+
+        @media (max-width: 500px) {
+            .chat-container {
+                width: 95%;
+                height: 90vh;
+                margin: 20px auto;
+            }
         }
     </style>
 </head>
@@ -99,18 +149,28 @@
 
 <div class="chat-container">
     <div class="chat-header">
-        Assistant Location 🚗
+        <div class="avatar">K</div>
+        <div class="header-text">
+            <div class="name">Kevin - Assistant Location</div>
+            <div class="status">En ligne • Réponse instantanée</div>
+        </div>
     </div>
 
     <div class="chat-box" id="chatBox">
         <div class="message bot">
-            Bonjour 👋 Posez-moi une question sur la location du véhicule.
+            Bienvenue 👋<br><br>
+            Je suis Kevin, votre assistant virtuel.<br>
+            Je suis là pour répondre à vos questions concernant la location du véhicule.
         </div>
     </div>
 
     <div class="input-area">
         <input type="text" id="message" placeholder="Écrivez votre message...">
-        <button onclick="sendMessage()">Envoyer</button>
+        <button onclick="sendMessage()">➤</button>
+    </div>
+
+    <div class="footer-note">
+        Appuyez sur Entrée pour envoyer votre message
     </div>
 </div>
 
@@ -134,6 +194,8 @@ async function sendMessage() {
     addMessage(message, "user");
     input.value = "";
 
+    addMessage("Kevin écrit...", "bot", true);
+
     let response = await fetch("/chat", {
         method: "POST",
         headers: {
@@ -144,16 +206,28 @@ async function sendMessage() {
 
     let data = await response.json();
 
+    removeTypingMessage();
     addMessage(data.reply, "bot");
 }
 
-function addMessage(text, sender) {
+function addMessage(text, sender, typing = false) {
     let msg = document.createElement("div");
     msg.classList.add("message", sender);
-    msg.innerText = text;
 
+    if (typing) {
+        msg.id = "typing";
+    }
+
+    msg.innerHTML = text;
     chatBox.appendChild(msg);
     chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function removeTypingMessage() {
+    let typing = document.getElementById("typing");
+    if (typing) {
+        typing.remove();
+    }
 }
 </script>
 
