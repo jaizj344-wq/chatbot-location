@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 import json
 import os
+import difflib
+from datetime import datetime
 
 app = Flask(__name__)
 
-# Chargement de la FAQ
 with open("faq.json", "r", encoding="utf-8") as f:
     faq = json.load(f)
 
@@ -14,41 +15,51 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
+    message = request.json["message"].lower().strip()
 
-    message = request.json["message"].lower()
+    meilleure_reponse = None
+    meilleur_score = 0
 
-    mots_cles = {
-        "prix": ["prix", "tarif", "coût", "cout"],
-        "caution": ["caution", "garantie", "depot", "dépôt"],
-        "franchise": ["franchise"],
-        "assurance": ["assurance", "assuré", "couverture"],
-        "age": ["âge", "age", "jeune conducteur"],
-        "permis": ["permis", "ancienneté"],
-        "documents": ["document", "documents", "papier", "pièce d'identité", "identité"],
-        "kilometrage": ["kilometrage", "kilométrage", "kilometre", "kilomètre", "km"],
-        "carburant": ["carburant", "essence", "plein"],
-        "annulation": ["annulation", "annuler"],
-        "devis": ["devis"],
-        "vehicule": ["vehicule", "véhicule", "modèle", "modele"],
-        "retour": ["retour", "restitution"],
-        "dommage": ["dommage", "accident", "rayure"],
-        "conducteur": ["conducteur", "conductrice"],
-        "livraison": ["livraison"]
-    }
+    for item in faq:
+        question_type = item["question"].lower()
+        mots_cles = item["mots_cles"]
+        reponse = item["reponse"]
 
-    for categorie, mots in mots_cles.items():
-        for mot in mots:
-            if mot in message:
-                return jsonify({
-                    "reply": faq.get(
-                        categorie,
-                        "Je n'ai pas encore cette information."
-                    )
-                })
+        score = difflib.SequenceMatcher(None, message, question_type).ratio()
+
+        for mot in mots_cles:
+            if mot.lower() in message:
+                score += 0.35
+
+        if score > meilleur_score:
+            meilleur_score = score
+            meilleure_reponse = reponse
+
+    if meilleur_score >= 0.35:
+        return jsonify({"reply": meilleure_reponse})
+
+    enregistrer_question_inconnue(message)
 
     return jsonify({
-        "reply": "Je n'ai pas trouvé la réponse à votre question. Merci de reformuler votre demande."
+        "reply": "Je n'ai pas encore cette information. Vous pouvez contacter le loueur directement."
     })
+
+def enregistrer_question_inconnue(question):
+    fichier = "questions_inconnues.json"
+
+    data = []
+
+    if os.path.exists(fichier):
+        with open(fichier, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+    data.append({
+        "question": question,
+        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
+
+    with open(fichier, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

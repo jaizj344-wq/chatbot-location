@@ -1,22 +1,52 @@
-{
-  "prix": "Le prix total TTC de la location est indiqué dans le devis transmis avant la réservation.",
-  "caution": "La caution demandée est de 1000€. Elle est bloquée sur votre carte bancaire et restituée après vérification du véhicule.",
-  "franchise": "La franchise est de 1500€ en cas de sinistre responsable.",
-  "frais": "Aucun frais caché n'est appliqué. Les éventuels frais supplémentaires sont indiqués avant la réservation.",
-  "assurance": "L'assurance est incluse dans le tarif de location. Les garanties exactes sont précisées dans le contrat.",
-  "jeune conducteur": "Les jeunes conducteurs sont acceptés à partir de 18 ans avec au moins 2 ans de permis.",
-  "age": "L'âge minimum requis est de 18 ans.",
-  "permis": "Un permis valide est obligatoire. Une ancienneté minimale de 2 ans est demandée.",
-  "kilometrage": "200 km par jour sont inclus. Les kilomètres supplémentaires sont facturés selon le contrat.",
-  "carburant": "Le véhicule doit être restitué avec le même niveau de carburant qu'au départ.",
-  "annulation": "L'annulation est possible selon les conditions précisées lors de la réservation.",
-  "devis": "Un devis détaillé peut être fourni sur simple demande.",
-  "vehicule": "Le véhicule loué correspond au modèle réservé ou à un modèle équivalent en cas d'indisponibilité exceptionnelle.",
-  "modele": "Nous faisons notre maximum pour fournir le modèle réservé. Un modèle équivalent peut être proposé si nécessaire.",
-  "documents": "Pour louer un véhicule, vous devez présenter votre permis de conduire et une pièce d'identité.",
-  "etat": "Un état des lieux complet est réalisé au départ et au retour du véhicule.",
-  "livraison": "La livraison du véhicule peut être proposée selon votre localisation.",
-  "retour": "Le véhicule doit être restitué à la date et à l'heure prévues dans le contrat.",
-  "dommage": "Tout dommage constaté est comparé à l'état des lieux de départ.",
-  "conducteur": "Seules les personnes déclarées au contrat sont autorisées à conduire le véhicule."
-}
+[
+  {
+    "question": "Quel est le prix total de la location ?",
+    "mots_cles": ["prix", "tarif", "coût", "cout", "payer", "total"],
+    "reponse": "Le prix total TTC de la location est indiqué dans le devis transmis avant la réservation."
+  },
+  {
+    "question": "Quel est le montant de la caution ?",
+    "mots_cles": ["caution", "garantie", "dépôt", "depot"],
+    "reponse": "La caution demandée est de 1000€. Elle est bloquée sur votre carte bancaire et restituée après vérification du véhicule."
+  },
+  {
+    "question": "Quel est le kilométrage inclus ?",
+    "mots_cles": ["kilométrage", "kilometrage", "km", "kilomètre", "kilometre"],
+    "reponse": "200 km par jour sont inclus. Les kilomètres supplémentaires sont facturés selon le contrat."
+  },
+  {
+    "question": "Quels documents faut-il fournir ?",
+    "mots_cles": ["documents", "papier", "permis", "identité", "carte identité"],
+    "reponse": "Pour louer un véhicule, vous devez présenter votre permis de conduire et une pièce d'identité."
+  },
+  {
+    "question": "Quel âge faut-il avoir pour louer ?",
+    "mots_cles": ["âge", "age", "jeune conducteur", "minimum"],
+    "reponse": "L'âge minimum requis est de 21 ans avec un permis valide."
+  },
+  {
+    "question": "L'assurance est-elle incluse ?",
+    "mots_cles": ["assurance", "assuré", "couverture"],
+    "reponse": "L'assurance est incluse dans le tarif de location. Les garanties exactes sont précisées dans le contrat."
+  },
+  {
+    "question": "Comment fonctionne le carburant ?",
+    "mots_cles": ["carburant", "essence", "plein"],
+    "reponse": "Le véhicule doit être restitué avec le même niveau de carburant qu'au départ."
+  },
+  {
+    "question": "Peut-on annuler la réservation ?",
+    "mots_cles": ["annulation", "annuler", "remboursement"],
+    "reponse": "L'annulation est possible selon les conditions précisées lors de la réservation."
+  },
+  {
+    "question": "Que se passe-t-il en cas de dommage ?",
+    "mots_cles": ["dommage", "rayure", "accident", "casse"],
+    "reponse": "Tout dommage constaté est comparé à l'état des lieux de départ."
+  },
+  {
+    "question": "Peut-on avoir une livraison du véhicule ?",
+    "mots_cles": ["livraison", "livrer", "déposer", "domicile"],
+    "reponse": "La livraison du véhicule peut être proposée selon votre localisation."
+  }
+]
