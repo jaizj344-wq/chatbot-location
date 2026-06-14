@@ -30,8 +30,7 @@
     "reponse": "L'âge minimum requis est de 18 ans avec un permis valide."
   },
    {
-    "question": "Quel est le prix du plein ?",
-    "mots_cles": ["prix", "tarif", "cout", "coût", "payer", "total"],
-    "reponse": "Le prix du plein varie selon nos modèles."
-  }
-]
+  "question": "Quel est le prix du plein ?",
+  "mots_cles": ["plein", "carburant", "essence", "sp95", "sp98", "diesel", "gazole"],
+  "reponse": "Le prix du plein varie selon le véhicule et le prix du carburant au moment du remplissage."
+}
