@@ -30,15 +30,15 @@
     "reponse": "Pour louer un véhicule, vous devez présenter votre permis de conduire et une pièce d'identité."
   },
   {
-    "question": "Quel est le kilométrage inclus ?",
-    "mots_cles": ["kilométrage", "kilometrage", "km", "kilomètre", "kilometre"],
-    "reponse": "200 km par jour sont inclus. Les kilomètres supplémentaires sont facturés selon le contrat."
-  },
-  {
-    "question": "Comment fonctionne le carburant ?",
-    "mots_cles": ["carburant", "essence", "plein", "diesel", "gazole", "sp95", "sp98", "e10", "roule"],
-    "reponse": "Le véhicule doit être restitué avec le même niveau de carburant qu'au départ."
-  },
+  "question": "Quel est le kilométrage inclus ?",
+  "mots_cles": ["kilométrage", "km"],
+  "reponse": "200 km par jour sont inclus."
+},
+{
+  "question": "Quel carburant utiliser ?",
+  "mots_cles": ["carburant", "essence", "diesel", "roule"],
+  "reponse": "Le type de carburant est indiqué sur le véhicule ou dans le contrat."
+}
   {
     "question": "Peut-on annuler la réservation ?",
     "mots_cles": ["annulation", "annuler", "remboursement"],
