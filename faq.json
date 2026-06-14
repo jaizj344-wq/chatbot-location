@@ -5,5 +5,8 @@
   "kilometrage": "200 km par jour sont inclus.",
   "horaire": "Les horaires de prise en charge sont de 8h à 20h.",
   "retour": "Le retour du véhicule doit se faire avant 11h.",
-  "assurance": "L'assurance est incluse dans le prix de la location."
+  "assurance": "L'assurance est incluse dans le prix de la location.",
+   "caca": "Le véhicule doit être rendu propre et sans déchets.",
+   "fumer": "Il est interdit de fumer dans le véhicule.",
+   "plein": "Le véhicule doit être rendu avec le plein d'essence."
 }
