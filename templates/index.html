@@ -1,248 +1,334 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Support Location Véhicules</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Support Location Véhicules</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #eef2f7;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .chat-container {
-            width: 100%;
-            max-width: 430px;
-            height: 100vh;
-            margin: 0 auto;
-            background: white;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+    .chat-container {
+      width: 100%;
+      max-width: 430px;
+      height: 100vh;
+      background: white;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .chat-header {
-            background: #111827;
-            color: white;
-            padding: 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-shrink: 0;
-        }
+    .header {
+      background: #2563eb;
+      color: white;
+      padding: 18px;
+      text-align: center;
+    }
 
-        .avatar {
-            width: 42px;
-            height: 42px;
-            background: #2563eb;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
+    .name {
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-        .header-text .name {
-            font-weight: bold;
-            font-size: 16px;
-        }
+    .status {
+      font-size: 13px;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
 
-        .header-text .status {
-            font-size: 12px;
-            color: #d1d5db;
-            margin-top: 3px;
-        }
+    .messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
 
-        .chat-box {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-            background: #f9fafb;
-        }
+    .message {
+      max-width: 80%;
+      padding: 13px 15px;
+      border-radius: 18px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
 
-        .message {
-            max-width: 82%;
-            padding: 11px 15px;
-            margin: 9px 0;
-            border-radius: 18px;
-            line-height: 1.4;
-            font-size: 14px;
-            word-wrap: break-word;
-        }
+    .user {
+      background: #2563eb;
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 5px;
+    }
 
-        .user {
-            background: #2563eb;
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 5px;
-        }
+    .bot {
+      background: #e5e7eb;
+      color: #111827;
+      margin-right: auto;
+      border-bottom-left-radius: 5px;
+    }
 
-        .bot {
-            background: #e5e7eb;
-            color: #111827;
-            margin-right: auto;
-            border-bottom-left-radius: 5px;
-        }
+    .input-area {
+      border-top: 1px solid #e5e7eb;
+      padding: 12px;
+      background: white;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
 
-        .input-area {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            border-top: 1px solid #e5e7eb;
-            background: white;
-            flex-shrink: 0;
-        }
+    input {
+      flex: 1;
+      padding: 14px;
+      border-radius: 25px;
+      border: 1px solid #d1d5db;
+      outline: none;
+      font-size: 16px;
+    }
 
-        input {
-            flex: 1;
-            min-width: 0;
-            padding: 13px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 25px;
-            outline: none;
-            font-size: 16px;
-        }
+    button {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: #2563eb;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
 
-        input:focus {
-            border-color: #2563eb;
-        }
+    button:active {
+      transform: scale(0.96);
+    }
 
-        button {
-            margin-left: 8px;
-            width: 46px;
-            height: 46px;
-            border: none;
-            background: #2563eb;
-            color: white;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 17px;
-            flex-shrink: 0;
-        }
-
-        button:hover {
-            background: #1d4ed8;
-        }
-
-        .footer-note {
-            font-size: 11px;
-            text-align: center;
-            color: #6b7280;
-            padding: 0 0 8px 0;
-            background: white;
-            flex-shrink: 0;
-        }
-
-        @media (min-width: 600px) {
-            .chat-container {
-                height: 620px;
-                margin: 35px auto;
-                border-radius: 22px;
-                box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            }
-        }
-    </style>
+    .hint {
+      font-size: 12px;
+      text-align: center;
+      color: #6b7280;
+      padding-bottom: 8px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="chat-container">
-    <div class="chat-header">
-        <div class="avatar">S</div>
-        <div class="header-text">
-            <div class="name">Support Location Véhicules</div>
-            <div class="status">Réponse instantanée • 24h/24</div>
-        </div>
+  <div class="chat-container">
+    <div class="header">
+      <div class="name">Support Location Véhicules</div>
+      <div class="status">Réponse instantanée • 24h/24</div>
     </div>
 
-    <div class="chat-box" id="chatBox">
-        <div class="message bot">
-            Bienvenue.<br><br>
-            Je suis Kevin, votre assistant virtuel.<br>
-            Je suis à votre disposition pour répondre à toutes vos questions concernant la location du véhicule.
-        </div>
+    <div class="messages" id="messages">
+      <div class="message bot">
+        Bonjour 👋 Je suis votre assistant location. Posez-moi votre question.
+      </div>
     </div>
 
     <div class="input-area">
-        <input type="text" id="message" placeholder="Écrivez votre message...">
-        <button onclick="sendMessage()">➤</button>
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Écrivez votre message..."
+        autocomplete="off"
+      />
+      <button onclick="sendMessage()">➤</button>
     </div>
 
-    <div class="footer-note">
-        Appuyez sur Entrée pour envoyer votre message
-    </div>
-</div>
+    <div class="hint">Appuyez sur Entrée pour envoyer votre message</div>
+  </div>
 
-<script>
-const input = document.getElementById("message");
-const chatBox = document.getElementById("chatBox");
+  <script>
+    const faq = [
+      {
+        title: "âge minimum",
+        keywords: [
+          "age minimum", "âge minimum", "quel age", "quel âge",
+          "21 ans", "avoir quel age", "avoir quel âge",
+          "permis", "jeune conducteur"
+        ],
+        answer: "L'âge minimum requis est de 21 ans avec un permis valide."
+      },
+      {
+        title: "carburant essence",
+        keywords: [
+          "quelle essence", "quel essence", "carburant",
+          "type essence", "type de carburant", "sp95", "sp98",
+          "sans plomb", "diesel", "gazole", "pompe",
+          "plein", "mettre comme essence"
+        ],
+        answer: "Le type de carburant est indiqué sur la trappe à carburant ou sur le contrat de location. En cas de doute, contactez-nous avant de faire le plein."
+      },
+      {
+        title: "niveau carburant retour",
+        keywords: [
+          "rendre avec le plein", "restituer avec le plein",
+          "niveau de carburant", "même niveau", "retour carburant",
+          "je dois remettre le plein", "plein au retour"
+        ],
+        answer: "Le véhicule doit être restitué avec le même niveau de carburant qu'au départ."
+      },
+      {
+        title: "prix location",
+        keywords: [
+          "prix", "tarif", "combien", "coût", "cout",
+          "ça coûte combien", "location coûte"
+        ],
+        answer: "Les tarifs dépendent du véhicule, de la durée de location et des options choisies. Indiquez-nous le modèle souhaité et la durée pour obtenir un prix précis."
+      },
+      {
+        title: "caution",
+        keywords: [
+          "caution", "dépôt de garantie", "depot de garantie",
+          "empreinte bancaire", "bloqué sur la carte", "blocage carte"
+        ],
+        answer: "Une caution peut être demandée avant le départ. Elle est restituée après le retour du véhicule si aucun dommage n'est constaté."
+      },
+      {
+        title: "documents",
+        keywords: [
+          "document", "documents", "papier", "papiers",
+          "pièce d'identité", "piece d'identite", "cni",
+          "permis de conduire", "justificatif"
+        ],
+        answer: "Pour louer un véhicule, il faut généralement une pièce d'identité, un permis de conduire valide et une carte bancaire."
+      },
+      {
+        title: "assurance",
+        keywords: [
+          "assurance", "assuré", "assuree", "accident",
+          "franchise", "dommage", "rayure", "vol"
+        ],
+        answer: "Le véhicule est assuré selon les conditions du contrat. Une franchise peut s'appliquer en cas de dommage, accident ou vol."
+      },
+      {
+        title: "retard",
+        keywords: [
+          "retard", "je suis en retard", "rendre en retard",
+          "heure de retour dépassée", "depasser l'heure"
+        ],
+        answer: "En cas de retard, prévenez-nous rapidement. Des frais supplémentaires peuvent s'appliquer selon la durée du dépassement."
+      },
+      {
+        title: "kilométrage",
+        keywords: [
+          "kilomètre", "kilometre", "km", "kilométrage",
+          "kilometrage", "illimité", "limite kilométrique"
+        ],
+        answer: "Le kilométrage autorisé dépend de l'offre choisie. Il peut être limité ou illimité selon le contrat."
+      },
+      {
+        title: "réservation",
+        keywords: [
+          "réserver", "reserver", "réservation", "reservation",
+          "disponible", "disponibilité", "disponibilite",
+          "je veux louer"
+        ],
+        answer: "Pour réserver, indiquez-nous la date, l'heure, la durée souhaitée et le véhicule voulu."
+      },
+      {
+        title: "annulation",
+        keywords: [
+          "annuler", "annulation", "remboursement",
+          "je veux annuler", "modifier réservation",
+          "modifier reservation"
+        ],
+        answer: "Une réservation peut être modifiée ou annulée selon les conditions prévues lors de la réservation."
+      },
+      {
+        title: "paiement",
+        keywords: [
+          "payer", "paiement", "carte bancaire",
+          "espèces", "especes", "virement", "acompte"
+        ],
+        answer: "Le paiement peut généralement se faire par carte bancaire. Un acompte peut être demandé pour confirmer la réservation."
+      }
+    ];
 
-input.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
+    function normalizeText(text) {
+      return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^\w\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function wordIncluded(message, keyword) {
+      const cleanMessage = normalizeText(message);
+      const cleanKeyword = normalizeText(keyword);
+
+      const regex = new RegExp("\\b" + cleanKeyword.replace(/\s+/g, "\\s+") + "\\b", "i");
+      return regex.test(cleanMessage);
+    }
+
+    function getBotResponse(message) {
+      let bestMatch = null;
+      let bestScore = 0;
+
+      for (const item of faq) {
+        let score = 0;
+
+        for (const keyword of item.keywords) {
+          if (wordIncluded(message, keyword)) {
+            score++;
+          }
+        }
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestMatch = item;
+        }
+      }
+
+      if (bestScore > 0) {
+        return bestMatch.answer;
+      }
+
+      return "Je n'ai pas bien compris votre question. Pouvez-vous reformuler ou préciser votre demande ?";
+    }
+
+    function addMessage(text, sender) {
+      const messages = document.getElementById("messages");
+      const messageDiv = document.createElement("div");
+
+      messageDiv.className = "message " + sender;
+      messageDiv.textContent = text;
+
+      messages.appendChild(messageDiv);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const userText = input.value.trim();
+
+      if (userText === "") return;
+
+      addMessage(userText, "user");
+      input.value = "";
+
+      setTimeout(() => {
+        const botResponse = getBotResponse(userText);
+        addMessage(botResponse, "bot");
+      }, 400);
+    }
+
+    document.getElementById("userInput").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
         sendMessage();
-    }
-});
-
-async function sendMessage() {
-    let message = input.value.trim();
-
-    if (message === "") {
-        return;
-    }
-
-    addMessage(message, "user");
-    input.value = "";
-
-    addMessage("Kevin écrit...", "bot", true);
-
-    try {
-        let response = await fetch("/chat", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ message: message })
-        });
-
-        let data = await response.json();
-
-        removeTypingMessage();
-        addMessage(data.reply, "bot");
-    } catch (error) {
-        removeTypingMessage();
-        addMessage("Une erreur est survenue. Merci de réessayer.", "bot");
-    }
-}
-
-function addMessage(text, sender, typing = false) {
-    let msg = document.createElement("div");
-    msg.classList.add("message", sender);
-
-    if (typing) {
-        msg.id = "typing";
-    }
-
-    msg.innerHTML = text;
-    chatBox.appendChild(msg);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function removeTypingMessage() {
-    let typing = document.getElementById("typing");
-    if (typing) {
-        typing.remove();
-    }
-}
-</script>
+      }
+    });
+  </script>
 
 </body>
 </html>

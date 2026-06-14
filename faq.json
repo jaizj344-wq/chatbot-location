@@ -6,18 +6,18 @@
   },
   {
     "question": "Quel est le montant de la caution ?",
-    "mots_cles": ["caution", "garantie", "dépôt", "depot"],
+    "mots_cles": ["caution", "garantie", "depot", "dépôt"],
     "reponse": "La caution demandée est de 1000€. Elle est bloquée sur votre carte bancaire et restituée après vérification du véhicule."
   },
   {
-    "question": "Quel est le kilométrage inclus ?",
-    "mots_cles": ["kilométrage", "kilometrage", "km", "kilomètre", "kilometre"],
-    "reponse": "200 km par jour sont inclus. Les kilomètres supplémentaires sont facturés selon le contrat."
+    "question": "Quel est le montant de la franchise ?",
+    "mots_cles": ["franchise"],
+    "reponse": "La franchise est de 1500€ en cas de sinistre responsable."
   },
   {
-    "question": "Quels documents faut-il fournir ?",
-    "mots_cles": ["documents", "papier", "permis", "identité", "carte identité"],
-    "reponse": "Pour louer un véhicule, vous devez présenter votre permis de conduire et une pièce d'identité."
+    "question": "L'assurance est-elle incluse ?",
+    "mots_cles": ["assurance", "assuré", "couverture"],
+    "reponse": "L'assurance est incluse dans le tarif de location. Les garanties exactes sont précisées dans le contrat."
   },
   {
     "question": "Quel âge faut-il avoir pour louer ?",
@@ -25,9 +25,14 @@
     "reponse": "L'âge minimum requis est de 21 ans avec un permis valide."
   },
   {
-    "question": "L'assurance est-elle incluse ?",
-    "mots_cles": ["assurance", "assuré", "couverture"],
-    "reponse": "L'assurance est incluse dans le tarif de location. Les garanties exactes sont précisées dans le contrat."
+    "question": "Quels documents faut-il fournir ?",
+    "mots_cles": ["documents", "papier", "permis", "identité", "carte identité"],
+    "reponse": "Pour louer un véhicule, vous devez présenter votre permis de conduire et une pièce d'identité."
+  },
+  {
+    "question": "Quel est le kilométrage inclus ?",
+    "mots_cles": ["kilométrage", "kilometrage", "km", "kilomètre", "kilometre"],
+    "reponse": "200 km par jour sont inclus. Les kilomètres supplémentaires sont facturés selon le contrat."
   },
   {
     "question": "Comment fonctionne le carburant ?",
@@ -40,6 +45,11 @@
     "reponse": "L'annulation est possible selon les conditions précisées lors de la réservation."
   },
   {
+    "question": "Le véhicule sera-t-il exactement celui présenté ?",
+    "mots_cles": ["véhicule", "vehicule", "modèle", "modele"],
+    "reponse": "Le véhicule loué correspond au modèle réservé ou à un modèle équivalent en cas d'indisponibilité exceptionnelle."
+  },
+  {
     "question": "Que se passe-t-il en cas de dommage ?",
     "mots_cles": ["dommage", "rayure", "accident", "casse"],
     "reponse": "Tout dommage constaté est comparé à l'état des lieux de départ."
@@ -48,5 +58,15 @@
     "question": "Peut-on avoir une livraison du véhicule ?",
     "mots_cles": ["livraison", "livrer", "déposer", "domicile"],
     "reponse": "La livraison du véhicule peut être proposée selon votre localisation."
+  },
+  {
+    "question": "Qui peut conduire le véhicule ?",
+    "mots_cles": ["conducteur", "conductrice", "conduire"],
+    "reponse": "Seules les personnes déclarées au contrat sont autorisées à conduire le véhicule."
+  },
+  {
+    "question": "Comment se passe le retour du véhicule ?",
+    "mots_cles": ["retour", "restitution", "rendre"],
+    "reponse": "Le véhicule doit être restitué à la date et à l'heure prévues dans le contrat."
   }
 ]
