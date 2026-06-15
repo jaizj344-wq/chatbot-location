@@ -46,6 +46,7 @@
             justify-content: center;
             font-weight: bold;
             font-size: 18px;
+            flex-shrink: 0;
         }
 
         .name {
@@ -66,6 +67,7 @@
         }
 
         .message {
+            width: fit-content;
             max-width: 78%;
             padding: 11px 15px;
             margin: 9px 0;
@@ -95,10 +97,12 @@
             padding: 12px;
             border-top: 1px solid #e5e7eb;
             background: white;
+            gap: 8px;
         }
 
         input {
             flex: 1;
+            min-width: 0;
             padding: 13px 16px;
             border: 1px solid #2563eb;
             border-radius: 25px;
@@ -107,7 +111,6 @@
         }
 
         button {
-            margin-left: 8px;
             width: 46px;
             height: 46px;
             border: none;
@@ -116,6 +119,7 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 17px;
+            flex-shrink: 0;
         }
 
         .footer-note {
@@ -127,20 +131,64 @@
         }
 
         .password-box {
-            margin-top: 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
             text-align: center;
         }
 
-        .password-box input {
+        .password-message {
+            background: #e5e7eb;
+            color: #111827;
+            padding: 18px 22px;
+            border-radius: 18px;
+            max-width: 85%;
+            line-height: 1.4;
+            font-size: 15px;
+        }
+
+        .password-row {
             width: 85%;
-            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .password-input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .password-input-wrapper input {
+            width: 100%;
+            padding-right: 45px;
+        }
+
+        .eye-button {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            background: transparent;
+            color: #2563eb;
+            font-size: 16px;
+        }
+
+        .send-password-button {
+            background: #2563eb;
         }
 
         .error {
-            color: red;
-            margin-top: 12px;
+            color: #dc2626;
+            margin-top: 4px;
             font-weight: bold;
             display: none;
+            font-size: 14px;
         }
 
         @media (max-width: 500px) {
@@ -166,15 +214,21 @@
 
     <div class="chat-box" id="chatBox">
         <div id="passwordSection" class="password-box">
-            <div class="message bot">
+            <div class="password-message">
                 Bienvenue.<br><br>
                 Veuillez entrer le mot de passe pour accéder au chatbot.
             </div>
 
-            <input type="password" id="passwordInput" placeholder="Mot de passe">
-            <button onclick="checkPassword()">➤</button>
+            <div class="password-row">
+                <div class="password-input-wrapper">
+                    <input type="password" id="passwordInput" placeholder="Mot de passe">
+                    <button class="eye-button" onclick="togglePassword()">👁</button>
+                </div>
 
-            <div id="errorMessage" class="error">❌ Mot de passe incorrect</div>
+                <button class="send-password-button" onclick="checkPassword()">➤</button>
+            </div>
+
+            <div id="errorMessage" class="error">Mot de passe incorrect</div>
         </div>
     </div>
 
@@ -192,6 +246,16 @@
 const chatBox = document.getElementById("chatBox");
 const inputArea = document.getElementById("inputArea");
 
+function togglePassword() {
+    const passwordInput = document.getElementById("passwordInput");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+    } else {
+        passwordInput.type = "password";
+    }
+}
+
 async function checkPassword() {
     let password = document.getElementById("passwordInput").value.trim();
     let errorMessage = document.getElementById("errorMessage");
@@ -208,10 +272,11 @@ async function checkPassword() {
         chatBox.innerHTML = `
             <div class="message bot">
                 Bienvenue.<br><br>
-                Je suis Kevin, votre assistant virtuel.<br>
-                Je suis à votre disposition pour répondre à toutes vos questions concernant la location de nos véhicule.
+                Je suis Paul, votre assistant virtuel.<br>
+                Je suis à votre disposition pour répondre à toutes vos questions concernant la location de nos véhicules.
             </div>
         `;
+
         inputArea.style.display = "flex";
         document.getElementById("message").focus();
     } else {
@@ -241,7 +306,7 @@ async function sendMessage() {
     addMessage(message, "user");
     input.value = "";
 
-    addMessage("Kevin écrit...", "bot", true);
+    addMessage("Paul écrit...", "bot", true);
 
     try {
         let response = await fetch("/chat", {
